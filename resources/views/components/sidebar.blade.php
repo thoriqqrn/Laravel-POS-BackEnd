@@ -12,13 +12,15 @@
                 <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Menu</li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('users.index') }}"><i class="fas fa-user"></i><span>Users</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('products*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('products.index') }}"><i class="fas fa-list"></i><span>Products</span></a>
             </li>
+            <li class="nav-item {{ Request::is('categories*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('categories.index') }}"><i class="fas fa-book"></i><span>Categories</span></a>
+            </li>
         </ul>
-
     </aside>
 </div>
