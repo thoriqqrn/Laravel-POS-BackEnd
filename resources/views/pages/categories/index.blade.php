@@ -55,30 +55,35 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Create At</th>
-                                            <th class="justify-content-center">Action</th>
+                                            <th>Image</th>
+                                            <th class="content-center">Action</th>
                                         </tr>
                                         @foreach ($categories as $category)
-                                        <tr>
-                                            <td>{{ $category->name }}</td>
-                                            <td>{{ $category->created_at }}</td>
-                                            <td>
-                                                <div class="d-flex justify-content-center">
-                                                    <a href='{{ route('categories.edit', $category->id) }}' class="btn btn-sm btn-info btn-icon">
-                                                        <i class="fas fa-edit"></i> Edit
-                                                    </a>
-                                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="ml-2">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-sm btn-danger btn-icon confirm-delete">
-                                                            <i class="fas fa-times"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>{{ $category->name }}</td>
+                                                <td>{{ $category->created_at }}</td>
+                                                <td><img src="{{ asset($category->image) }}" alt="" width=50 height=50></td>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex ">
+                                                        <a href='{{ route('categories.edit', $category->id) }}'
+                                                            class="btn btn-sm btn-info btn-icon">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
+                                                        <form action="{{ route('categories.destroy', $category->id) }}"
+                                                            method="POST" class="ml-2">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
+                                                                <i class="fas fa-times"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </table>
-                                    
+
                                 </div>
                                 <div class="float-right">
                                     {{ $categories->withQueryString()->links() }}

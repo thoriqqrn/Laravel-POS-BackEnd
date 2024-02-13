@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -86,9 +87,10 @@ class ProductController extends Controller
             'stock' => 'required|numeric',
             'status' => 'required|boolean',
             'is_favorite' => 'required|boolean',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Tambahkan validasi untuk gambar jika perlu
         ]);
-
-        // update the request...
+    
+        // Update data produk
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
@@ -98,17 +100,24 @@ class ProductController extends Controller
         $product->status = $request->status;
         $product->is_favorite = $request->is_favorite;
         $product->save();
-
-        //save image
+    
+        // Proses gambar hanya jika ada file yang diunggah
         if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($product->image && Storage::exists($product->image)) {
+                Storage::delete($product->image);
+            }
+    
+            // Simpan gambar baru
             $image = $request->file('image');
-            $image->storeAs('public/products', $product->id . '.' . $image->getClientOriginalExtension());
-            $product->image = 'storage/products/' . $product->id . '.' . $image->getClientOriginalExtension();
+            $path = $image->store('public/products');
+            $product->image = str_replace('public/', 'storage/', $path);
             $product->save();
         }
-
+    
         return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
+    
 
     // destroy
     public function destroy($id)

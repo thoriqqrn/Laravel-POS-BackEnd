@@ -59,6 +59,8 @@
                                             <th>Price</th>
                                             <th>Status</th>
                                             <th>Create At</th>
+                                            <th>Image</th>
+
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($products as $product)
@@ -76,8 +78,9 @@
                                                     {{ $product->status == 1 ? 'Active' : 'Inactive' }}
                                                 </td>
                                                 <td>{{ $product->created_at }}</td>
+                                                <td><img src="{{ asset($product->image) }}" alt="" width=50 height=50></td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center">
+                                                    <div class="d-flex ">
                                                         <a href='{{ route('products.edit', $product->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
