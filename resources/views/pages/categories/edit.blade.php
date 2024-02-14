@@ -23,7 +23,7 @@
 
 
                 <div class="card">
-                    <form action="{{ route('categories.update', $category) }}" method="POST">
+                    <form action="{{ route('categories.update', $category->id) }}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-header">
